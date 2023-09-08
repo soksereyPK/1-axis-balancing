@@ -50,7 +50,7 @@ void loop (){
   if (currentT - previousT_1 >= loop_time) 
     {
 
-      Motor_control(0);
+      Motor_control(100);
 
     }
   previousT_1 = currentT;

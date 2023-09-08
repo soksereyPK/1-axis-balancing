@@ -1,3 +1,10 @@
+void writeTo(byte device, byte address, byte value) {
+  Wire.beginTransmission(device);
+  Wire.write(address);
+  Wire.write(value);
+  Wire.endTransmission(true);
+}
+
 void angle_setup() {
   Wire.begin();
   delay (100);
@@ -12,13 +19,13 @@ void angle_setup() {
     delay (5);
   }
   GyZ_offset = GyZ_offset_sum >> 10;
-  digitalWrite(BUZZER, HIGH);
+  tone(BUZZER, 1000);
   delay(70);
-  digitalWrite(BUZZER, LOW);
+  noTone(BUZZER);
   delay(80);
-  digitalWrite(BUZZER, HIGH);
+  tone(BUZZER, 1000);
   delay(70);
-  digitalWrite(BUZZER, LOW);
+  noTone(BUZZER);
   Serial.print("GyZ offset value = "); Serial.println(GyZ_offset);
 }
 
@@ -49,7 +56,7 @@ void angle_calc() {
   if (abs(robot_angle) > 9) vertical = false;
   if (abs(robot_angle) < 0.3) vertical = true;
   
-  //Serial.print("Angle: "); Serial.println(robot_angle);
+  Serial.print("Angle: "); Serial.println(robot_angle);
 }
 
 void battVoltage(double voltage) {
@@ -99,4 +106,10 @@ int Tuning() {
       printValues();
       break;  
   }
+}
+
+void printValues() {
+  Serial.print("X1: "); Serial.print(X1);
+  Serial.print(" X2: "); Serial.print(X2);
+  Serial.print(" X3: "); Serial.println(X3, 3);
 }
