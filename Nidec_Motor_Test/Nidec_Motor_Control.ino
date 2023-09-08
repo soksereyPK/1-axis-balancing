@@ -15,7 +15,7 @@ int pwm_s = 0;
 int32_t motor_speed; 
 byte dir; 
 uint32_t timer;
-long currentT, previousT_1, previousT_2 = 0; 
+long currentT, previousT_1 = 0; 
 float loop_time = 10;
 
 
@@ -50,7 +50,7 @@ void loop (){
   if (currentT - previousT_1 >= loop_time) 
     {
 
-      Motor_control(100);
+      Motor_control(000);
 
     }
   previousT_1 = currentT;

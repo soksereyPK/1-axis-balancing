@@ -1,6 +1,8 @@
+
 void angle_setup() {
   Wire.begin();
   delay (100);
+
   writeTo(MPU6050, PWR_MGMT_1, 0);
   writeTo(MPU6050, ACCEL_CONFIG, accSens << 3); // Specifying output scaling of accelerometer
   writeTo(MPU6050, GYRO_CONFIG, gyroSens << 3); // Specifying output scaling of gyroscope
@@ -50,53 +52,4 @@ void angle_calc() {
   if (abs(robot_angle) < 0.3) vertical = true;
   
   //Serial.print("Angle: "); Serial.println(robot_angle);
-}
-
-void battVoltage(double voltage) {
-  //Serial.print("batt: "); Serial.println(voltage); //debug
-  if (voltage > 8 && voltage <= 9.5) {
-    digitalWrite(BUZZER, HIGH);
-  } else {
-    digitalWrite(BUZZER, LOW);
-  }
-}
-
-void setPWM(uint16_t dutyCycle) { // dutyCycle is a value between 0-ICR1
-    OCR1A = dutyCycle;
-}
-
-void Motor_control(int pwm) {
-  if (pwm <= 0) {
-    digitalWrite(DIRECTION, LOW);
-    pwm = -pwm;
-  } else {
-    digitalWrite(DIRECTION, HIGH);
-  }
-  setPWM(map(pwm, 0, 255, PWMVALUE, 0));
-}
-
-int Tuning() {
-  if (!Serial.available())  return 0;
-  delay(2);
-  char param = Serial.read();               // get parameter byte
-  if (!Serial.available()) return 0;
-  char cmd = Serial.read();                 // get command byte
-  Serial.flush();
-  switch (param) {
-    case 'p':
-      if (cmd == '+')    X1 += 1;
-      if (cmd == '-')    X1 -= 1;
-      printValues();
-      break;
-    case 'i':
-      if (cmd == '+')    X2 += 0.01;
-      if (cmd == '-')    X2 -= 0.01;
-      printValues();
-      break;
-     case 's':
-      if (cmd == '+')    X3 += 0.005;
-      if (cmd == '-')    X3 -= 0.005;
-      printValues();
-      break;  
-  }
 }
