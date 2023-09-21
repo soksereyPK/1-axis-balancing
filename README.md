@@ -1,6 +1,6 @@
 # 1-axis-balancing
 
-### 1. ESP32 PINOUT 
+### 1. ESP32 PINOUT [Link](https://www.upesy.com/blogs/tutorials/esp32-pinout-reference-gpio-pins-ultimate-guide#)
 ![](Img/esp32_wroom_dev_kit.webp)
 
 ### 2. Nidec 24h Motor Pinout
