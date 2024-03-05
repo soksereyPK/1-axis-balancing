@@ -24,7 +24,19 @@ int32_t  GyZ_offset_sum = 0;
 int32_t  GyY_offset_sum = 0;
 int32_t  GyX_offset_sum = 0;
 
+float robot_angleX, robot_angleY, angleX, angleY;
+float Acc_angleX, Acc_angleY;      
+int32_t motor_speed_X;  
+int32_t motor_speed_Y;  
+
 long currentT, previousT_1, previousT_2 = 0; 
+
+void writeTo(byte device, byte address, byte value) {
+  Wire.beginTransmission(device);
+  Wire.write(address);
+  Wire.write(value);
+  Wire.endTransmission(true);
+}
 
 
 void angle_setup(){
@@ -38,7 +50,7 @@ void angle_setup(){
 
   for (int i = 0; i<1024; i++){
     angle_calc(); 
-    GyZ_offset_sum += Gyz;    // add the current value of GyZ to GyZ_offset_sum over interation of 1024
+    GyZ_offset_sum += GyZ;    // add the current value of GyZ to GyZ_offset_sum over interation of 1024
     delay(3);
   }
 
@@ -101,9 +113,7 @@ void angle_calc(){
   angleX = robot_angleX;
   angleY = robot_angleY;
 
-  Serial.print(angleX); 
-  Serial.print(" , ")
-  Serial.println(angleY); 
+  Serial.println(angleX); 
 
 }
 
@@ -111,15 +121,19 @@ void angle_calc(){
 
 void setup() {
   Serial.begin(115200);
+  angle_setup(); 
 
 }
 
 void loop() {
+
     currentT = millis();
 
   if (currentT - previousT_1 >= loop_time) {
     angle_calc();
   }
+
+ 
 
 
 }
