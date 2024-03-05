@@ -13,4 +13,4 @@
 ![](Img/ESP32_Schematic.png)
 
 ### 5. Arduino Nano with DC motor 
-![](Img/Nano-DC_schematic)
+![](Img/Nano-DC_schematic.png)
