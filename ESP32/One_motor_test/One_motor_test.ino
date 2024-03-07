@@ -1,6 +1,6 @@
 
-#define BRAKE     17
-#define DIR      2
+#define BRAKE     16
+#define DIR      17
 #define PWM      4 
 #define PWM_CH   1 
 
@@ -18,6 +18,9 @@ void Motor_control(int sp){
   }
   pwmSet(PWM_CH, sp > 255 ? 255 : 255 - sp); 
 }
+
+
+
 void pwmSet(uint8_t channel, uint32_t value){
   ledcWrite(channel, value); 
 }
