@@ -22,14 +22,12 @@
 
 
 float Gyro_amount = 0.996;  
-
 bool vertical = false;
 
-float K1 = 75.0;
-float K2 = 7.5; 
-float K3 = 0.01;
+float K1 = 75;
+float K2 = 5.25; 
+float K3 = 0.04;
 int loop_time = 10;
-
 
 float alpha = 0.4;  
 int pwm_s = 0; 
