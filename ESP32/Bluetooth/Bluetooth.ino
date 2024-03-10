@@ -19,18 +19,22 @@ void setup() {
 void loop() {
 
    currentT = millis();
+
   if (currentT - previousT_1 >= loop_time) {
     Tuning(); 
+    
     previousT_1 = currentT;
+
   }
 
 }
 
 
-int Tuning() {
-  if (!SerialBT.available())  return 0;  // Check if there is any data available to read. If there isn't no data exits the function and return 0. 
+void Tuning() {
+
+  if (!SerialBT.available())  return;  // Check if there is any data available to read. If there isn't no data exits the function and return 0. 
   char param = SerialBT.read();  // Read single byte of data from BT and store in param 
-  if (!SerialBT.available()) return 0; // Check again is there is any data available. No data exits and return 0. 
+  if (!SerialBT.available()) return; // Check again is there is any data available. No data exits and return 0. 
   char cmd = SerialBT.read();  // reads another byte of data and store in cmd 
   //SerialBT.flush();  // Clear serial buffer of any remaining data before next cycle
    switch (param) {
@@ -49,6 +53,7 @@ int Tuning() {
       if (cmd == '-')    K3 -= 0.005;
       printValues();
       break;  
+      
   }
 }
 
