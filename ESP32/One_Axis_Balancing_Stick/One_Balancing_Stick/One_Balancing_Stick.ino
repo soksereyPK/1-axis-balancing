@@ -1,11 +1,16 @@
 
 #include "ESP32.h"
 #include <Wire.h>
+#include "BluetoothSerial.h"
+#include "Buzzer_music.h"
+
+BluetoothSerial SerialBT;
 
 
 
 void setup() {
   Serial.begin(115200);
+  SerialBT.begin("ESP32-Cube-blue"); 
   pinMode(BUZZER, OUTPUT);
   pinMode(BRAKE, OUTPUT);
   digitalWrite(BRAKE, HIGH);
@@ -24,6 +29,9 @@ void loop() {
   currentT = millis();
 
   if (currentT - previousT_1 >= loop_time) {
+    Tuning(); 
+
+    previousT_1 = currentT;
     angle_calc();
 
     if (vertical) {
@@ -50,6 +58,7 @@ void loop() {
 
     }
 
-    previousT_1 = currentT;
+  
   }
 }
+

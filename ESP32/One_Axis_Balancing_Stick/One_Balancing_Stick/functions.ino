@@ -87,6 +87,47 @@ void Motor1_control(int sp) {
   pwmSet(PWM1_CH, sp > 255 ? 255 : 255 - sp);
 }
 
+void Tuning() {
+  if (!SerialBT.available()) return; 
+  char param = SerialBT.read();               // get parameter byte
+  if (!SerialBT.available()) return;
+  char cmd = SerialBT.read();                 // get command byte
+  //Serial.flush();
+  switch (param) {
+    case 'p':
+      if (cmd == '+')    K1 += 1;
+      if (cmd == '-')    K1 -= 1;
+      printValues();
+      break;
+    case 'i':
+      if (cmd == '+')    K2 += 0.01;
+      if (cmd == '-')    K2 -= 0.01;
+      printValues();
+      break;
+    case 's':
+      if (cmd == '+')    K3 += 0.005;
+      if (cmd == '-')    K3 -= 0.005;
+      printValues();
+      break;  
+    case '1':
+      hbd(); 
+      break; 
+    case '2':
+      mario();
+      break;
+    case '3':
+      harryPoter();
+      break;
+  }
+}
+
+void printValues() {
+  SerialBT.print("K1: "); SerialBT.print(K1);
+  SerialBT.print(" K2: "); SerialBT.print(K2);
+  SerialBT.print(" K3: "); SerialBT.println(K3,4);
+}
+
+
 // int Tuning() {
 //   if (!SerialBT.available())  return 0;  // Check if there is any data availiable to read. If no data, the function return 0 indicating no tuning action was perfromed 
 //   delay(1);
