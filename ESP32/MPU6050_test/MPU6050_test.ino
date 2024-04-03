@@ -1,35 +1,28 @@
 
 #include <Wire.h>
-
 #define MPU6050 0x68 // device address
 #define ACCEL_CONFIG 0x1C   // Accelerometer configuration address 
 #define GYRO_CONFIG 0x1B    // Gyro configuration address 
-
-
 #define PWR_MGMT_1 0x6B   // Power Management Mode 
-#define PWR_MGMT_2 0x6C 
-
+ //#define PWR_MGMT_2 0x6C 
 //Sensor output scaling 
 #define accSens 0   // 0 = 2g, 1 = 4g, 2 = 8g, 3 = 16g
 #define gyroSens 1   // 0 = 250rad/s, 1 = 500rad/s, 2 1000rad/s, 3 = 2000rad/s
-
 float Gyro_amount = 0.1;
 int loop_time = 10;
-
-int16_t  AcX, AcY, AcZ, GyX, GyY, GyZ, gyroX, gyroY, gyroZ, gyroYfilt, gyroZfilt;
+int16_t  AcX, AcY, AcZ, GyX, GyY, GyZ, gyroYfilt, gyroZfilt;
 int16_t  GyZ_offset = 0;
 int16_t  GyY_offset = 0;
 int16_t  GyX_offset = 0;
 int32_t  GyZ_offset_sum = 0;
 int32_t  GyY_offset_sum = 0;
 int32_t  GyX_offset_sum = 0;
-
 float robot_angleX, robot_angleY, angleX, angleY;
 float Acc_angleX, Acc_angleY;      
 int32_t motor_speed_X;  
 int32_t motor_speed_Y;  
-
 long currentT, previousT_1, previousT_2 = 0; 
+
 
 void writeTo(byte device, byte address, byte value) {
   Wire.beginTransmission(device);
@@ -105,13 +98,8 @@ void angle_calc(){
   robot_angleX += GyZ * loop_time / 1000 / 65.536;   // Integrating gyroscope reading over time to update the estimated angle along x-axis. Devided by 65.536 covert to degree per second 
   Acc_angleX = atan2(AcY, -AcX) * 57.2958;           // angle from acc. values * 57.2958 (deg/rad)
   robot_angleX = robot_angleX * Gyro_amount + Acc_angleX * (1.0 - Gyro_amount); // Sensor fusion complementary filter 
- 
-  robot_angleY += GyY * loop_time / 1000 / 65.536; 
-  Acc_angleY = -atan2(AcZ, -AcX) * 57.2958;              // angle from acc. values * 57.2958 (deg/rad)
-  robot_angleY = robot_angleY * Gyro_amount + Acc_angleY * (1.0 - Gyro_amount);
 
   angleX = robot_angleX;
-  angleY = robot_angleY;
 
   Serial.println(angleX); 
 

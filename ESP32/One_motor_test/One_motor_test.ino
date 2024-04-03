@@ -20,7 +20,6 @@ void Motor_control(int sp){
 }
 
 
-
 void pwmSet(uint8_t channel, uint32_t value){
   ledcWrite(channel, value); 
 }
@@ -42,7 +41,7 @@ void setup(){
 
 
 void loop() {
-  Motor_control(-10);
+  Motor_control(8);
   delay(100); 
 }
 
